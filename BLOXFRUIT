@@ -10,10 +10,6 @@ repeat wait(1)
                     for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Marines.Frame.ViewportFrame.TextButton.MouseButton1Click)) do
                         v.Function()
                     end
-                else
-                    for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui.Main.ChooseTeam.Container.Pirates.Frame.ViewportFrame.TextButton.MouseButton1Click)) do
-                        v.Function()
-                    end
                 end
             end
         end
@@ -3761,7 +3757,7 @@ game.StarterGui:SetCore("SendNotification", {
 	Duration = 8
 })
 
-local win = library:Window("Day",[[Hub]],[[Version : Ramake ]],"9606070311",Enum.KeyCode.RightControl)
+local win = library:Window("Day",[[Hub]],[[Version : Premium ]],"9606070311",Enum.KeyCode.RightControl)
 local General_Tab = win:Tab("General",[[7040391851]])
 local Quest_Tab = win:Tab("    Quest & Item",[[9606626859]])
 local PvP_Tab = win:Tab("PvP",[[9606626034]])
@@ -9948,6 +9944,15 @@ PvP_Tab:Label("Bounty")
 			return old(...)
 		end)
 	end)
+PvP_Tab:Toggle("Spectate Player","9606294253",false,function(bool)
+		Sp = bool
+		local plr1 = game.Players.LocalPlayer.Character.Humanoid
+		local plr2 = game.Players:FindFirstChild(SelectedKillPlayer)
+		repeat wait(.1)
+			game.Workspace.Camera.CameraSubject = plr2.Character.Humanoid
+		until Sp == false 
+		game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
+end)
 	PvP_Tab:Toggle("Aimbot Gun","9606294253",false,function(vu)
 		Aimbot = vu
 		if vu then
@@ -10797,6 +10802,7 @@ spawn(function()
 		end)
 	end
 end)
+Shop_Tab:Label("Trade Item")
 
 Island_Tab:Label("Server")
 Island_Tab:Button("Hop Server",function()
