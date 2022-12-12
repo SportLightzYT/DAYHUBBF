@@ -1047,7 +1047,7 @@ function CheckQuestBoss()
 					QuestLv = 1
 					NameMon = "Sweet Thiefs"
 					CFrameQ = CFrame.new(149.2049560546875, 24.81962013244629, -12775.548828125)
-					CFrameMon = CFrame.new(66.8513412475586, 24.819538116455078, -12542.1123046875)
+					CFrameMon = CFrame.new(63.095542907714844, 24.819589614868164, -12574.8935546875)
 				elseif Lv == 2375 or Lv <= 2400 or SelectMonster == "Candy Rebel [Lv. 2375]" then 
 					Ms = "Candy Rebel [Lv. 2375]"
 					NameQuest = "ChocQuest2"
@@ -1831,7 +1831,7 @@ function CheckQuestBoss()
 					QuestLv = 1
 					NameMon = "Sweet Thiefs"
 					CFrameQ = CFrame.new(149.2049560546875, 24.81962013244629, -12775.548828125)
-					CFrameMon = CFrame.new(66.8513412475586, 24.819538116455078, -12542.1123046875)
+					CFrameMon = CFrame.new(63.095542907714844, 24.819589614868164, -12574.8935546875)
 				elseif Lv == 2375 or Lv <= 2400 or SelectMonster == "Candy Rebel [Lv. 2375]" then 
 					Ms = "Candy Rebel [Lv. 2375]"
 					NameQuest = "ChocQuest2"
@@ -1893,17 +1893,17 @@ end
 function TP2(P1)
 	local Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
 	if Distance < 1000 then
-		Speed = 360
+		Speed = 350
 	elseif Distance < 500 then
-		Speed = 360
+		Speed = 350
 	elseif Distance < 500 then
-		Speed = 360
+		Speed = 350
 	elseif Distance < 500 then
-		Speed = 360
+		Speed = 350
 	elseif Distance < 1000 then
-		Speed = 360
+		Speed = 350
 	elseif Distance >= 1000 then
-		Speed = 360
+		Speed = 350
 	end
 	game:GetService("TweenService"):Create(
 		game.Players.LocalPlayer.Character.HumanoidRootPart,
@@ -3800,7 +3800,6 @@ local Setting_Tab = win:Tab("Setting",[[9606644121]])
 local Status_Tab = win:Tab("Status",[[9613645002]])
 local Esp_Tab = win:Tab("ESP",[[9606628205]])
 local Hop_Tab = win:Tab("Hop",[[9608089732]])
-local Capcut_Tab = win:Tab("Capcut",[[9606644121]])
 General_Tab:Label("Farm Level")
 
 General_Tab:Toggle("Auto Farm","9606294253",_G.Setting_table.AutoFarm,function(vu)
@@ -4038,10 +4037,10 @@ end)
 
 AttackRandomType = 1
 task.spawn(function()
-	while wait() do 
-		AttackRandomType = math.random(1,5)
-		wait(0.3)
-	end
+    while wait() do 
+        AttackRandomType = math.random(1,5)
+        wait(0.2)
+    end
 end)
 if _G.Setting_table.FastAttack_Mode == nil then
 	_G.Setting_table.FastAttack_Mode = "Fast"
@@ -5145,7 +5144,6 @@ spawn(function()
 							end
 						end
 					elseif game.ReplicatedStorage:FindFirstChild("Reborn Skeleton [Lv. 1975]") then
-						TP2(CFrame.new(-9504.8564453125, 172.14292907714844, 6057.259765625))
 						TP(game.ReplicatedStorage:FindFirstChild("Reborn Skeleton [Lv. 1975]").HumanoidRootPart.CFrame*CFrame.new(0,30,0))
 					else
 						for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
@@ -5166,10 +5164,10 @@ spawn(function()
 					end
 				end
 			end
-		end)
+			end)
 	end
 end)
-General_Tab:Toggle("Auto Buy Random Surprise","9606294253",_G.Setting_table.Farm_Random_S,function(vu)
+General_Tab:Toggle("Auto Random Surprise","9606294253",_G.Setting_table.Farm_Random_S,function(vu)
 	Farm_Random_S = vu
 	_G.Setting_table.Farm_Random_S = vu
 	Update_Setting(getgenv()['MyName'])
@@ -9843,23 +9841,22 @@ end)
 
 PvP_Tab:Label("Misc")
 PvP_Tab:Toggle("Ctrl Click TP","9606294253",true,function(vu)
-          CTRL = vu
-       end)
-       local Plr = game:GetService("Players").LocalPlayer
-       local Mouse = Plr:GetMouse()
-       Mouse.Button1Down:connect(
-          function()
-             if not game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftControl) then
-                return
-             end
-             if not Mouse.Target then
-                return
-             end
-             if CTRL then
-                Plr.Character:MoveTo(Mouse.Hit.p)
-             end
-          end
-       )
+ 	getgenv().CTRL = vu
+end)
+
+local Plr = game:GetService("Players").LocalPlayer
+local Mouse = Plr:GetMouse()
+Mouse.Button1Down:connect(function()
+	if not game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.LeftControl) then
+		return
+	end
+	if not Mouse.Target then
+		return
+	end
+	if getgenv().CTRL then
+		Plr.Character:MoveTo(Mouse.Hit.p)
+	end
+end)
 	function infAb()
 		if game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility") then
 			game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("Agility"):Destroy()
@@ -10087,6 +10084,15 @@ PvP_Tab:Toggle("Spectate Player","9606294253",false,function(bool)
 		until Sp == false 
 		game.Workspace.Camera.CameraSubject = game.Players.LocalPlayer.Character.Humanoid
 end)
+PvP_Tab:Toggle("Teleport Player","9606294253",false,function(value)
+        _G.TeleportPly = value
+        pcall(function()
+            if _G.TeleportPly then
+                repeat TP2(game:GetService("Players")[SelectedKillPlayer].Character.HumanoidRootPart.CFrame) wait() until _G.TeleportPly == false
+            end
+            StopTween(_G.TeleportPly)
+        end)
+    end)
 PvP_Tab:Toggle("Aimbot Gun","9606294253",false,function(vu)
 		Aimbot = vu
 		if vu then
@@ -10476,7 +10482,6 @@ local args = {
     [1] = "MysteriousMan",
     [2] = "2"
 }
-                -- Triple_A
                 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
             else
 				wait(2)
@@ -11379,21 +11384,17 @@ elseif Three_World  then
     end)
     
 	Island_Tab:Button("Hydra Arena", function()
-	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5745.28809, 610.449829, -239.348633, 0.999923825, -5.70820617e-08, -0.0123431049, 5.71043159e-08, 1, 1.45039625e-09, 0.0123431049, -2.1551303e-09, 0.999923825))
         TP2(CFrame.new(5229.0166015625, 68.15036010742188, -1434.3436279296875))
     end)
 
     Island_Tab:Button("Yama Room", function()
-	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5745.28809, 610.449829, -239.348633, 0.999923825, -5.70820617e-08, -0.0123431049, 5.71043159e-08, 1, 1.45039625e-09, 0.0123431049, -2.1551303e-09, 0.999923825))
         TP2(CFrame.new(5226.80517578125, 6.565110683441162, 1109.474609375))
     end)
 
 	Island_Tab:Button("Tushita Door", function()
-	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5745.28809, 610.449829, -239.348633, 0.999923825, -5.70820617e-08, -0.0123431049, 5.71043159e-08, 1, 1.45039625e-09, 0.0123431049, -2.1551303e-09, 0.999923825))
         TP2(CFrame.new(5184.662109375, 141.78726196289062, 912.6285400390625))
     end)
     Island_Tab:Button("Gaint Tree", function()
-	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(5745.28809, 610.449829, -239.348633, 0.999923825, -5.70820617e-08, -0.0123431049, 5.71043159e-08, 1, 1.45039625e-09, 0.0123431049, -2.1551303e-09, 0.999923825))
         TP2(CFrame.new(2276.0859375, 25.87850189209, -6493.03125))
     end)
     
@@ -11416,7 +11417,6 @@ elseif Three_World  then
     end)
 
     Island_Tab:Button("Haunted Castle", function()
-	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-5072.77246, 314.54129, -3151.95483, 0.359622836, -6.80840202e-08, -0.93309778, 4.08927434e-08, 1, -5.72052095e-08, 0.93309778, -1.75846271e-08, 0.359622836))
         TP2(CFrame.new(-9515.07324, 142.130615, 5537.58398))
     end)
     Island_Tab:Button("Raid Lab", function()
@@ -11425,19 +11425,15 @@ elseif Three_World  then
     end)
 
     Island_Tab:Button("Ice Cream Island",function()
-	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12551.349609375, 337.1940612792969, -7505.35888671875))
         TP2(CFrame.new(-874.2578125, 65.8453369140625, -10911.232421875))
     end)
     Island_Tab:Button("Soa of Cake",function()
-	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12551.349609375, 337.1940612792969, -7505.35888671875))
         TP2(CFrame.new(-2073.262451171875, 37.16134262084961, -10183.3271484375))
     end)
     Island_Tab:Button("Cake Loaf",function()
-	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12551.349609375, 337.1940612792969, -7505.35888671875))
         TP2(CFrame.new(-2099.33, 66.9971, -12128.6))
     end)
     Island_Tab:Button("Chocolate Island",function()
-	game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-12551.349609375, 337.1940612792969, -7505.35888671875))
         TP2(CFrame.new(101.124573, 24.7601147, -12080.1318, -0.636760354, -0, -0.771061838, -0, 1, -0, 0.771061718, 0, -0.636760414))
     end)
 end
@@ -12690,171 +12686,3 @@ end)
 if _G.Setting_table.Auto_Valkyrie_Helmet then
 	Auto_Valkyrie_Helmet = true
 end
-Capcut_Tab:Label("Kaitun Capcut | Wait Update | But Working")
-Capcut_Tab:Button("Kaitun Capcut",function(value)
-			local cac = require(game:GetService("Players").LocalPlayer.PlayerGui.Main.UIController.Inventory)
-		local Inventory = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")
-		local Items = {}
-		local RaityLevel = {"Mythical","Legendary","Rare"}
-		local RaityColor =  {
-			["Rare"] =  Color3.fromRGB(140, 82, 255),
-			["Legendary"] = Color3.fromRGB(213, 43, 228) ,
-			["Mythical"] =  Color3.fromRGB(238, 47, 50)
-		}
-		function GetRaity(color)
-			for k,v in pairs(RaityColor) do 
-				if v==color then return k end
-			end
-		end
-
-		for k,v in pairs(Inventory) do 
-			Items[v.Name] = v
-		end
-
-		local total = #getupvalue(cac.UpdateRender,4)
-		local rac = {}
-		local allitem = {}
-		local total2 = 0
-		while total2<total do 
-			local i = 0
-			while i < 25000 and total2<total do 
-				game:GetService("Players").LocalPlayer.PlayerGui.Main.InventoryContainer.Right.Content.ScrollingFrame.CanvasPosition = Vector2.new(0,i)
-				for k,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Main.InventoryContainer.Right.Content.ScrollingFrame.Frame:GetChildren()) do 
-					if v:IsA("Frame") and not rac[v.ItemName.Text] and v.ItemName.Visible==true then 
-						local vaihuhu = GetRaity(v.Background.BackgroundColor3)
-						if vaihuhu then
-							print("Rac")
-							if not allitem[vaihuhu] then 
-								allitem[vaihuhu] = {}
-							end
-							table.insert(allitem[vaihuhu],v:Clone())
-						end
-						total2=total2+1
-						rac[v.ItemName.Text] = true
-					end
-				end
-				i=i+20
-			end
-			wait()
-		end
-		function GetXY(vec) 
-			return vec*100
-		end
-
-		local tvk = Instance.new("UIListLayout")
-		tvk.FillDirection = Enum.FillDirection.Vertical
-		tvk.SortOrder = 2
-		tvk.Padding = UDim.new(0,10)
-
-		local Left = Instance.new("Frame",game.Players.LocalPlayer.PlayerGui.BubbleChat)
-		Left.BackgroundTransparency = 1
-		Left.Size = UDim2.new(.5,0,1,0) 
-		tvk.Parent = Left
-
-		local Right = Instance.new("Frame",game.Players.LocalPlayer.PlayerGui.BubbleChat)
-		Right.BackgroundTransparency = 1
-		Right.Size = UDim2.new(.5,0,1,0) 
-		Right.Position = UDim2.new(.6,0,0,0)
-		tvk:Clone().Parent = Right
-		for k,v in pairs(allitem) do 
-			local cac = Instance.new("Frame",Left)
-			cac.BackgroundTransparency = 1
-			cac.Size = UDim2.new(1,0,0,0) 
-			cac.LayoutOrder = table.find(RaityLevel,k)
-
-			local cac2 = Instance.new("Frame",Right)
-			cac2.BackgroundTransparency = 1
-			cac2.Size = UDim2.new(1,0,0,0) 
-			cac2.LayoutOrder = table.find(RaityLevel,k)
-
-			local tvk = Instance.new("UIGridLayout",cac)
-			tvk.CellPadding = UDim2.new(.005,0,.005,0)
-			tvk.CellSize =  UDim2.new(0,70,0,70)
-			tvk.FillDirectionMaxCells = 100
-			tvk.FillDirection = Enum.FillDirection.Horizontal
-
-			local ccc = tvk:Clone()
-			ccc.Parent = cac2
-			for k,v in pairs(v) do 
-				if Items[v.ItemName.Text] and Items[v.ItemName.Text].Mastery then 
-					if v.ItemLine2.Text~="Accessory" then 
-						local bucac = v.ItemName:Clone()
-						bucac.BackgroundTransparency = 1
-						bucac.TextSize = 10
-						bucac.TextXAlignment  = 2
-						bucac.TextYAlignment  = 2
-						bucac.ZIndex  = 5
-						bucac.Text = Items[v.ItemName.Text].Mastery
-						bucac.Size = UDim2.new(.5,0,.5,0)
-						bucac.Position = UDim2.new(.5,0,.5,0)
-						bucac.Parent = v
-					end
-					v.Parent = cac
-				elseif v.ItemLine2.Text == "Blox Fruit" then 
-					v.Parent = cac2
-				end
-			end
-			cac.AutomaticSize = 2
-			cac2.AutomaticSize = 2
-		end
-		local ListHuhu = {
-			["Superhuman"] = Vector2.new(3,2),
-			["DeathStep"] = Vector2.new(4,3),
-			["ElectricClaw"] = Vector2.new(2,0),
-			["SharkmanKarate"] = Vector2.new(0,0),
-			["DragonTalon"] = Vector2.new(1,5)
-		}
-		local MeleeG = Instance.new("Frame",Left)
-		MeleeG.BackgroundTransparency = 1
-		MeleeG.Size = UDim2.new(1,0,0,0) 
-		MeleeG.LayoutOrder = table.find(RaityLevel,k)
-		MeleeG.AutomaticSize=2
-		MeleeG.LayoutOrder = 100
-		local tvk = Instance.new("UIGridLayout",MeleeG)
-		tvk.CellPadding = UDim2.new(.005,0,.005,0)
-		tvk.CellSize =  UDim2.new(0,70,0,70)
-		tvk.FillDirectionMaxCells = 100
-		tvk.FillDirection = Enum.FillDirection.Horizontal
-
-		local cac = {"Superhuman","ElectricClaw","DragonTalon","SharkmanKarate","DeathStep","GodHuman"}
-		for k,v in pairs(cac) do
-			if ListHuhu[v] and game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buy"..v,true) == 1 then 
-				local huhu = Instance.new("ImageLabel",MeleeG)
-				huhu.Image = "rbxassetid://9945562382"
-				huhu.ImageRectSize = Vector2.new(100,100)
-				huhu.ImageRectOffset = ListHuhu[v]*100
-			end
-		end
-		function formatNumber(v)
-			return tostring(v):reverse():gsub("%d%d%d", "%1,"):reverse():gsub("^,", "")
-		end
-		game:GetService("Players").LocalPlayer.PlayerGui.Main.Beli.Position = UDim2.new(0,800,0,500)
-		game:GetService("Players").LocalPlayer.PlayerGui.Main.Level.Position = UDim2.new(0,800,0,550)
-
-		local thieunang = game:GetService("Players").LocalPlayer.PlayerGui.Main.Fragments:Clone()
-		thieunang.Parent = game:GetService("Players").LocalPlayer.PlayerGui.BubbleChat
-		thieunang.Position = UDim2.new(0,800,0.63,0)
-		local n = formatNumber(game.Players.LocalPlayer.Data.Fragments.Value)
-		thieunang.Text = "ƒ"..n
-		print("Done")
-		pcall(function() 
-			game:GetService("Players").LocalPlayer.PlayerGui.Main.MenuButton:Destroy()
-		end)
-		pcall(function() 
-			game:GetService("Players").LocalPlayer.PlayerGui.Main.HP:Destroy()
-		end)
-		pcall(function() 
-			game:GetService("Players").LocalPlayer.PlayerGui.Main.Energy:Destroy()
-		end)
-		for k,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Main:GetChildren()) do 
-			if v:IsA("ImageButton") then 
-				v:Destroy()
-			end
-		end
-		pcall(function() 
-			game:GetService("Players").LocalPlayer.PlayerGui.Main.Compass:Destroy()
-						end)
-end)
-Capcut_Tab:Button("Remove Kaitun Pics | Hop Server",function()
-	HopLowServer()
-end)
